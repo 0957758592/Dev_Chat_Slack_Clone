@@ -7,7 +7,7 @@ const isOwnMessage = (message, user) => {
 };
 
 const timeFromNow = timestamp => {
-  moment(timestamp).fromNow();
+  return moment(timestamp).fromNow();
 };
 
 export const Message = ({ message, user }) => (

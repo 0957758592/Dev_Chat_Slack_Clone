@@ -27,18 +27,16 @@ import { connect } from "react-redux";
 const Layout = ({ currentUser, currentChannel }) => (
   <Grid columns="equal" className="app" style={{ background: "#eee" }}>
     <ColorPanel />
-    <SidePanel
-    key={currentUser && currentUser.uid}
-    currentUser={currentUser} />
+    <SidePanel key={currentUser && currentUser.uid} currentUser={currentUser} />
     <Grid.Column style={{ marginLeft: 320 }}>
       <Messages
-      key={currentChannel && currentChannel.id}
-      currentChannel={currentChannel} 
-      currentUser={currentUser}
+        key={currentChannel && currentChannel.id}
+        currentChannel={currentChannel}
+        currentUser={currentUser}
       />
     </Grid.Column>
     <Grid.Column>
-      <MetaPanel width={4} />
+      <MetaPanel width={2} />
     </Grid.Column>
   </Grid>
 );

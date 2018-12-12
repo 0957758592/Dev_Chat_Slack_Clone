@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../../helpers/firebase";
 import { Segment, Button, Input } from "semantic-ui-react";
+import FileModal from "./FileModal";
 
 export class MessageForm extends Component {
   state = {
@@ -8,8 +9,13 @@ export class MessageForm extends Component {
     channel: this.props.currentChannel,
     user: this.props.currentUser,
     isLoading: false,
-    errors: []
+    errors: [],
+    modal: false
   };
+
+  openModal = () => this.setState({ modal: true });
+
+  closeModal = () => this.setState({ modal: false });
 
   createdMessage = () => {
     const { message, user } = this.state;
@@ -61,7 +67,7 @@ export class MessageForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
-    const { errors, message, isLoading } = this.state;
+    const { errors, message, isLoading, modal } = this.state;
     return (
       <Segment className="message__form">
         <Input
@@ -90,11 +96,13 @@ export class MessageForm extends Component {
             className={isLoading ? "loading" : ""}
           />
           <Button
+            onClick={this.openModal}
             color="teal"
             content="Upload Media"
             labelPosition="right"
             icon="cloud upload"
           />
+          <FileModal modal={modal} closeModal={this.closeModal} />
         </Button.Group>
       </Segment>
     );
