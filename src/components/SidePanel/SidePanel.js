@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import { Menu } from "semantic-ui-react";
 import UserPanel from "./UserPanel";
-import Channels from './Channels'
+import Channels from "./Channels";
 
 export default class SlidePanel extends Component {
   render() {
-    const {currentUser} = this.props
+    const { currentUser } = this.props;
     return (
       <Menu
         size="large"
-        // inverted
+        inverted
         fixed="left"
-        // fixed
         vertical
         style={{ background: "#4c3c4c", fontsize: "1.2rem" }}
       >
-        <UserPanel currentUser={currentUser}/>
-        <Channels currentUser={currentUser}/>
+        <UserPanel currentUser={currentUser} />
+        <Channels currentUser={currentUser} />
       </Menu>
     );
   }
