@@ -139,7 +139,7 @@ export default class Register extends Component {
       loading
     } = this.state;
     return (
-      <Grid textAlign="center" verticalAlign="middle" className="auth">
+      <Grid textAlign="center" verticalAlign="middle" className="app">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon color="orange" textAlign="center">
             <Icon name="users" color="orange" />

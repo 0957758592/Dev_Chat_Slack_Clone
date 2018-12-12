@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
-// import { App } from "../components/App";
-import App from "../components/App";
+import Layout from "../components/Layout";
 import firebase from "../helpers/firebase";
 import { Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser, clearUser } from "../actions";
-import "../components/Auth/css/auth.css";
+import "../css/app.css";
 import { Spinner } from "../helpers/spinner";
 
-class Layout extends Component {
+class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -24,12 +23,11 @@ class Layout extends Component {
   }
 
   render() {
-    // return(
     return this.props.isLoading ? (
       <Spinner />
     ) : (
       <div>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={Layout} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </div>
@@ -44,4 +42,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { setUser, clearUser }
-)(withRouter(Layout));
+)(withRouter(App));

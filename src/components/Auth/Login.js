@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import "../css/auth.css";
 import firebase from "../../helpers/firebase";
-// import {isLogged} from './auth/auth'
-// import { setUser } from "../../actions";
-// import { connect } from "react-redux";
+
 import {
   Grid,
   Form,
@@ -45,7 +42,6 @@ export default class Login extends Component {
             currentUser: signedInUser,
             loading: false
           });
-          // this.props.getUser({ currentUser: signedInUser });
         })
         .catch(err => {
           console.log(err);
@@ -68,7 +64,7 @@ export default class Login extends Component {
   render() {
     const { email, password, errors, loading } = this.state;
     return (
-      <Grid textAlign="center" verticalAlign="middle" className="auth">
+      <Grid textAlign="center" verticalAlign="middle" className="app">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon color="violet" textAlign="center">
             <Icon name="code branch" color="violet" />
