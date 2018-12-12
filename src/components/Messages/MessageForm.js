@@ -72,6 +72,7 @@ export class MessageForm extends Component {
           labelPosition="left"
           placeholder="Write your message here"
           onChange={this.handleChange}
+          value={message}
           className={
             errors.some(error => error.message.includes("message"))
               ? "error"
