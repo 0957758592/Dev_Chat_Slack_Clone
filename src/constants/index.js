@@ -1,1 +1,2 @@
-export * from './auth.constatnts'
+export * from "./auth.constants";
+export * from "./channel.constants";

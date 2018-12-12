@@ -1,4 +1,4 @@
-import { authConstatnt } from "../constants";
+import { authConstant } from "../constants";
 
 const initialState = {
   currentUser: null,
@@ -7,7 +7,7 @@ const initialState = {
 
 export const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case authConstatnt.SET_USER:
+    case authConstant.SET_USER:
       return Object.assign(
         {},
         { ...state },
@@ -16,10 +16,10 @@ export const authReducer = (state = initialState, { type, payload }) => {
           isLoading: false
         }
       );
-    case authConstatnt.CLEAR_USER:
-      return { ...initialState, isLoading: false };
+    case authConstant.CLEAR_USER:
+      return { ...state, isLoading: false };
     default: {
-      return { ...state };
+      return state;
     }
   }
 };

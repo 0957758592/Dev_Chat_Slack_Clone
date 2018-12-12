@@ -1,14 +1,14 @@
-import { authConstatnt } from "../constants";
+import { authConstant } from "../constants";
 
 export const setUser = user => dispatch => {
   dispatch({
-    type: authConstatnt.SET_USER,
-    payload:{ currentUser: user}
+    type: authConstant.SET_USER,
+    payload: { currentUser: user }
   });
 };
 
 export const clearUser = () => dispatch => {
   dispatch({
-    type: authConstatnt.CLEAR_USER
-  })
-}
+    type: authConstant.CLEAR_USER
+  });
+};
