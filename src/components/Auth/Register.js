@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import "../css/auth.css";
 import firebase from "../../helpers/firebase";
 import md5 from "md5";
 import {
@@ -30,7 +29,7 @@ export default class Register extends Component {
   formValid = () => {
     let errors = [];
     let error;
-    // let success;
+
     if (this.isFormEmpty(this.state)) {
       error = { message: "Fill in all fields" };
       this.setState({ errors: errors.concat(error) });
@@ -46,8 +45,6 @@ export default class Register extends Component {
       this.setState({ errors: errors.concat(error) });
       return false;
     } else {
-      // success = {message: 'You are registered'}
-      // this.setState({ errors: errors.splice(0, errors.length).concat(success), });
       return true;
     }
   };
