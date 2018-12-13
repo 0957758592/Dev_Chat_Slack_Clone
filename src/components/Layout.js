@@ -36,7 +36,7 @@ const Layout = ({ currentUser, currentChannel }) => (
       />
     </Grid.Column>
     <Grid.Column>
-      <MetaPanel width={2} />
+      <MetaPanel widths={4} />
     </Grid.Column>
   </Grid>
 );
