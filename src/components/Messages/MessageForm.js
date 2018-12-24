@@ -44,12 +44,12 @@ export class MessageForm extends Component {
   };
 
   sendMessage = () => {
-    const { messagesRef } = this.props;
+    const { getMessagesRef } = this.props;
     const { message, channel, errors } = this.state;
 
     if (message) {
       this.setState({ isLoading: true });
-      messagesRef
+      getMessagesRef()
         .child(channel.id)
         .push()
         .set(this.createMessage())
@@ -74,15 +74,29 @@ export class MessageForm extends Component {
     }
   };
 
+  handleKeyPress = e => {
+    if (e.key === "Enter") {
+      this.sendMessage();
+    }
+  };
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  getPath = () => {
+    if (this.props.isPrivateChannel) {
+      return `chat/private-${this.state.channel.id}`;
+    } else {
+      return "chat/public";
+    }
   };
 
   uploadFile = (file, metadata) => {
     const { storageRef, channel, errors } = this.state;
     const pathToUpload = channel.id;
-    const ref = this.props.messagesRef;
-    const filePath = `chat/public/${uuidv4()}.jpg`;
+    const ref = this.props.getMessagesRef();
+    const filePath = `${this.getPath()}/${uuidv4()}.jpg`;
 
     this.setState(
       {
@@ -156,6 +170,7 @@ export class MessageForm extends Component {
           labelPosition="left"
           placeholder="Write your message here"
           onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
           value={message}
           className={
             errors.some(error => error.message.includes("message"))

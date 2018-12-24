@@ -7,6 +7,8 @@ import { Message } from "./Message";
 
 export default class Messages extends Component {
   state = {
+    privateChannel: this.props.isPrivateChannel,
+    privateMessagesRef: firebase.database().ref("privateMessages"),
     messagesRef: firebase.database().ref("messages"),
     messages: [],
     messagesLoading: true,
@@ -25,7 +27,16 @@ export default class Messages extends Component {
     if (channel && user) {
       this.addListeners(channel.id);
     }
+    this.scrollToBottom();
   }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  };
 
   componentWillUnmount() {
     const { channel } = this.state;
@@ -35,16 +46,23 @@ export default class Messages extends Component {
   }
 
   removeListeners = channelId => {
-    this.state.messagesRef.child(channelId).off();
+    const ref = this.getMessagesRef();
+    ref.child(channelId).off();
   };
 
   addListeners = channelId => {
     this.addMessageListener(channelId);
   };
 
+  getMessagesRef = () => {
+    const { messagesRef, privateMessagesRef, privateChannel } = this.state;
+    return privateChannel ? privateMessagesRef : messagesRef;
+  };
+
   addMessageListener = channelId => {
     let loadedMessages = [];
-    this.state.messagesRef.child(channelId).on("child_added", snap => {
+    const ref = this.getMessagesRef();
+    ref.child(channelId).on("child_added", snap => {
       loadedMessages.push(snap.val());
       this.setState({
         messages: loadedMessages,
@@ -82,7 +100,11 @@ export default class Messages extends Component {
     }
   };
 
-  displayChannelName = channel => (channel ? `#${channel.name}` : "");
+  displayChannelName = channel => {
+    return channel
+      ? `${this.state.privateChannel ? "@" : "#"}${channel.name}`
+      : "";
+  };
 
   handleSearchChange = e => {
     this.setState(
@@ -116,6 +138,7 @@ export default class Messages extends Component {
   render() {
     //prettier-ignore
     const {
+      privateChannel,
       messagesRef,
       messages,
       channel,
@@ -132,6 +155,7 @@ export default class Messages extends Component {
           numUniqueUsers={numUniqueUsers}
           handleSearchChange={this.handleSearchChange}
           searchLoading={searchLoading}
+          isPrivateChannel={privateChannel}
         />
 
         <Segment>
@@ -139,6 +163,11 @@ export default class Messages extends Component {
             {searchTerm
               ? this.displayMessages(searchResults)
               : this.displayMessages(messages)}
+            <div
+              ref={el => {
+                this.messagesEnd = el;
+              }}
+            />
           </Comment.Group>
         </Segment>
 
@@ -147,6 +176,8 @@ export default class Messages extends Component {
           currentChannel={channel}
           currentUser={user}
           isProgressBarVisible={this.isProgressBarVisible}
+          isPrivateChannel={privateChannel}
+          getMessagesRef={this.getMessagesRef}
         />
       </React.Fragment>
     );

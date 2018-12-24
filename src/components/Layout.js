@@ -6,25 +6,7 @@ import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
 import { connect } from "react-redux";
 
-// class Layout extends React.Component {
-//   render() {
-//     const { currentUser } = this.props;
-//     return (
-//       <Grid columns="equal" className="auth" style={{ background: "#eee" }}>
-//         <ColorPanel />
-//         <SidePanel currentUser={currentUser} />
-//         <Grid.Column style={{ marginLeft: 320 }}>
-//           <Messages />
-//         </Grid.Column>
-//         <Grid.Column>
-//           <MetaPanel width={4} />
-//         </Grid.Column>
-//       </Grid>
-//     );
-//   }
-// }
-
-const Layout = ({ currentUser, currentChannel }) => (
+const Layout = ({ currentUser, currentChannel, isPrivateChannel }) => (
   <Grid columns="equal" className="app" style={{ background: "#eee" }}>
     <ColorPanel />
     <SidePanel key={currentUser && currentUser.uid} currentUser={currentUser} />
@@ -33,6 +15,7 @@ const Layout = ({ currentUser, currentChannel }) => (
         key={currentChannel && currentChannel.id}
         currentChannel={currentChannel}
         currentUser={currentUser}
+        isPrivateChannel={isPrivateChannel}
       />
     </Grid.Column>
     <Grid.Column>
@@ -43,7 +26,8 @@ const Layout = ({ currentUser, currentChannel }) => (
 
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser,
-  currentChannel: state.channel.currentChannel
+  currentChannel: state.channel.currentChannel,
+  isPrivateChannel: state.channel.isPrivateChannel
 });
 
 export default connect(mapStateToProps)(Layout);
