@@ -17,8 +17,8 @@ export default class SlidePanel extends Component {
       >
         <UserPanel currentUser={currentUser} />
         <Channels currentUser={currentUser} />
-        <DirectMessages/>
-      </Menu>
+        <DirectMessages currentUser={currentUser} />
+      </Menu >
     );
   }
 }
