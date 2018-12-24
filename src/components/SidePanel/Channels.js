@@ -20,13 +20,13 @@ export class Channels extends Component {
     this.addListeners();
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.removeListeners();
   }
 
-removeListeners = () => {
-  this.state.channelsRef.off()
-}
+  removeListeners = () => {
+    this.state.channelsRef.off();
+  };
 
   addListeners = () => {
     let loadedChannels = [];
@@ -123,7 +123,7 @@ removeListeners = () => {
     return (
       <div>
         <React.Fragment>
-          <Menu.Menu style={{ paddingBottom: "2em" }}>
+          <Menu.Menu className="menu">
             <Menu.Item style={{ color: "#eee" }}>
               <span>
                 <Icon name="exchange" /> CHANNELS
