@@ -13,7 +13,10 @@ export default class Messages extends Component {
     channel: this.props.currentChannel,
     user: this.props.currentUser,
     progressBar: false,
-    numUniqueUsers: ""
+    numUniqueUsers: "",
+    searchTerm: "",
+    searchLoading: false,
+    searchResults: []
   };
 
   componentDidMount() {
@@ -81,27 +84,61 @@ export default class Messages extends Component {
 
   displayChannelName = channel => (channel ? `#${channel.name}` : "");
 
+  handleSearchChange = e => {
+    this.setState(
+      {
+        searchTerm: e.target.value,
+        searchLoading: true
+      },
+      () => this.handleSearchMessages()
+    );
+  };
+
+  handleSearchMessages = () => {
+    const channelMessages = [...this.state.messages];
+    const regex = new RegExp(
+      this.state.searchTerm && `\\${this.state.searchTerm}`,
+      "gi"
+    );
+    const searchResults = channelMessages.reduce((acc, message) => {
+      if (
+        (message.content && message.content.match(regex)) ||
+        (message.user.name && message.user.name.match(regex))
+      ) {
+        acc.push(message);
+      }
+      return acc;
+    }, []);
+    this.setState({ searchResults: searchResults });
+    setTimeout(() => this.setState({ searchLoading: false }), 1000);
+  };
+
   render() {
+    //prettier-ignore
     const {
       messagesRef,
       messages,
       channel,
       user,
-      progressBar,
-      numUniqueUsers
+      numUniqueUsers,
+      searchTerm,
+      searchResults,
+      searchLoading
     } = this.state;
     return (
       <React.Fragment>
         <MessagesHeader
           channelName={this.displayChannelName(channel)}
           numUniqueUsers={numUniqueUsers}
+          handleSearchChange={this.handleSearchChange}
+          searchLoading={searchLoading}
         />
 
         <Segment>
-          <Comment.Group
-            className={progressBar ? "messages_progress" : "messages"}
-          >
-            {this.displayMessages(messages)}
+          <Comment.Group className={"messages"}>
+            {searchTerm
+              ? this.displayMessages(searchResults)
+              : this.displayMessages(messages)}
           </Comment.Group>
         </Segment>
 
