@@ -8,3 +8,12 @@ export const setCurrentChannel = channel => dispatch => {
     }
   });
 };
+
+export const setPrivateChannel = isPrivateChannel => dispatch =>{
+  dispatch({
+    type: channelConstant.SET_PRIVATE_CHANNEL,
+    payload: {
+      isPrivateChannel
+    }
+  })
+}

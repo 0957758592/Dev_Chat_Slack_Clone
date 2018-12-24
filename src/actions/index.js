@@ -1,2 +1,2 @@
 export { setUser, clearUser } from "./auth.actions";
-export { setCurrentChannel } from "./channel.actions";
+export { setCurrentChannel, setPrivateChannel } from "./channel.actions";

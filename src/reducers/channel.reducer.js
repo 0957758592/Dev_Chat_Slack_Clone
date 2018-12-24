@@ -1,7 +1,8 @@
 import { channelConstant } from "../constants";
 
 const initialState = {
-  currentChannel: null
+  currentChannel: null,
+  isPrivateChannel: false
 };
 
 export const channelReducer = (state = initialState, { type, payload }) => {
@@ -14,6 +15,12 @@ export const channelReducer = (state = initialState, { type, payload }) => {
           currentChannel: payload.currentChannel
         }
       );
+      case channelConstant.SET_PRIVATE_CHANNEL:
+      return {
+        ...state,
+        isPrivateChannel: payload.isPrivateChannel
+      }
+
     default: {
       return state;
     }
