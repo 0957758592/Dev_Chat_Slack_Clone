@@ -22,5 +22,3 @@ export default class SlidePanel extends Component {
     );
   }
 }
-
-// export default SlidePanel

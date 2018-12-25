@@ -99,6 +99,7 @@ export class DirectMessages extends Component {
   setActiveChannel = userId => {
     this.setState({ activeChannel: userId });
   };
+
   render() {
     const { users, activeChannel } = this.state;
     return (

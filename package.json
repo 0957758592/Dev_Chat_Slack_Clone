@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.6.0",
+    "md5": "^2.2.1",
+    "moment": "^2.23.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
@@ -17,6 +19,7 @@
     "semantic-ui-react": "^0.83.0"
   },
   "scripts": {
+    "now-build": "react-scripts build && mv build dist",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -18,5 +18,3 @@ export default class ColorPanel extends Component {
     );
   }
 }
-
-// export default ColorPanel;

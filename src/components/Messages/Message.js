@@ -28,4 +28,3 @@ export const Message = ({ message, user }) => (
     </Comment.Content>
   </Comment>
 );
-// export default Message;
