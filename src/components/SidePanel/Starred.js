@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import {setCurrentChannel, setPrivateChannel} from '../../actions'
-import {Menu, Icon} from 'semantic-ui-react'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setCurrentChannel, setPrivateChannel } from "../../actions";
+import { Menu, Icon } from "semantic-ui-react";
 
 class Starred extends Component {
-    state = {
-        activeChannel: '',
-        starredChannels: []
-    }
+  state = {
+    activeChannel: "",
+    starredChannels: []
+  };
 
-    displayChannels = starredChannels =>
-    channels.length > 0 &&
+  displayChannels = starredChannels =>
+    starredChannels.length > 0 &&
     starredChannels.map(channel => (
       <Menu.Item
         key={channel.id}
@@ -23,32 +23,35 @@ class Starred extends Component {
       </Menu.Item>
     ));
 
-    changeChannel = channel => {
-        this.setActiveChannel(channel);
-        this.props.setCurrentChannel(channel);
-        this.props.setPrivateChannel(false);
-      };
+  changeChannel = channel => {
+    this.setActiveChannel(channel);
+    this.props.setCurrentChannel(channel);
+    this.props.setPrivateChannel(false);
+  };
 
-    setActiveChannel = channel => {
-        this.setState({ activeChannel: channel.id });
-      };
+  setActiveChannel = channel => {
+    this.setState({ activeChannel: channel.id });
+  };
 
   render() {
-      const {starredChannels} = this.state
+    const { starredChannels } = this.state;
     return (
       <div>
-         <Menu.Menu className="menu">
-            <Menu.Item style={{ color: "#eee" }}>
-              <span>
-                <Icon name="star" /> STARRED
-              </span>{" "}
-              ({starredChannels.length}){" "}
-            </Menu.Item>
-            {this.displayChannels(starredChannels)}
-          </Menu.Menu>
+        <Menu.Menu className="menu">
+          <Menu.Item style={{ color: "#eee" }}>
+            <span>
+              <Icon name="star" /> STARRED
+            </span>{" "}
+            ({starredChannels.length}){" "}
+          </Menu.Item>
+          {this.displayChannels(starredChannels)}
+        </Menu.Menu>
       </div>
-    )
+    );
   }
 }
 
-export default connect(null, {setCurrentChannel, setPrivateChannel}) (Starred)
+export default connect(
+  null,
+  { setCurrentChannel, setPrivateChannel }
+)(Starred);
