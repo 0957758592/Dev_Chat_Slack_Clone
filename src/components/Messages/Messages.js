@@ -38,17 +38,17 @@ export default class Messages extends Component {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   };
 
-  componentWillUnmount() {
-    const { channel } = this.state;
-    if (channel) {
-      this.removeListeners(channel.id);
-    }
-  }
+  // componentWillUnmount() {
+  //   const { channel } = this.state;
+  //   if (channel) {
+  //     this.removeListeners(channel.id);
+  //   }
+  // }
 
-  removeListeners = channelId => {
-    const ref = this.getMessagesRef();
-    ref.child(channelId).off();
-  };
+  // removeListeners = channelId => {
+  //   const ref = this.getMessagesRef();
+  //   ref.child(channelId).off();
+  // };
 
   addListeners = channelId => {
     this.addMessageListener(channelId);

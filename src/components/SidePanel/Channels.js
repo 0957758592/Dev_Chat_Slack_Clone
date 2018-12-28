@@ -44,15 +44,6 @@ export class Channels extends Component {
     });
   };
 
-  addNotificationListener = channelId => {
-    const { channel, messagesRef, notifications } = this.state;
-    messagesRef.child(channelId).on("child_added", snap => {
-      if (channel) {
-        this.handleNotifications(channelId, channel.id, notifications, snap);
-      }
-    });
-  };
-
   removeListeners = () => {
     this.state.channelsRef.off();
   };
@@ -66,6 +57,20 @@ export class Channels extends Component {
       this.setState({ channel: firstChannel });
     }
     this.setState({ firstLoad: false });
+  };
+
+  addNotificationListener = channelId => {
+    this.state.messagesRef.child(channelId).on("value", snap => {
+      if (this.state.channel) {
+        console.log("this.state.channel ", this.state.channel);
+        this.handleNotifications(
+          channelId,
+          this.state.channel.id,
+          this.state.notifications,
+          snap
+        );
+      }
+    });
   };
 
   handleNotifications = (channelId, currentChannelId, notifications, snap) => {
@@ -93,7 +98,7 @@ export class Channels extends Component {
       });
     }
 
-    this.setState({ notifications });
+    this.setState({ notifications: notifications });
   };
 
   getNotificationCount = channel => {
@@ -129,15 +134,16 @@ export class Channels extends Component {
 
   changeChannel = channel => {
     this.setActiveChannel(channel);
-    this.clearNotifications();
+    this.clearNotifications(channel);
     this.props.setCurrentChannel(channel);
     this.props.setPrivateChannel(false);
     this.setState({ channel });
   };
 
-  clearNotifications = () => {
+  clearNotifications = channel => {
     let index = this.state.notifications.findIndex(
-      notification => notification.id === this.state.channel.id
+      // notification => notification.id === this.state.channel.id
+      notification => notification.id === channel.id
     );
 
     if (index !== -1) {
