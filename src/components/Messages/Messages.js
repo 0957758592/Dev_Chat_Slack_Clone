@@ -28,7 +28,7 @@ export default class Messages extends Component {
 
     if (channel && user) {
       this.addListeners(channel.id);
-      this.addUserStarsListener(channel.id, user.uid)
+      this.addUserStarsListener(channel.id, user.uid);
     }
     this.scrollToBottom();
   }
@@ -73,10 +73,8 @@ export default class Messages extends Component {
 
   starChannel = () => {
     if (this.state.isChannelStarred) {
-      this.state.usersRef
-      .child(`${this.state.user.uid}/starred`)
-      .update({
-        [this.state.channel.id] : {
+      this.state.usersRef.child(`${this.state.user.uid}/starred`).update({
+        [this.state.channel.id]: {
           name: this.state.channel.name,
           details: this.state.channel.details,
           createdBy: {
@@ -85,16 +83,16 @@ export default class Messages extends Component {
             email: this.state.channel.createdBy.email
           }
         }
-      })
+      });
     } else {
       this.state.usersRef
-      .child(`${this.state.user.uid}/starred`)
-      .child(this.state.channel.id)
-      .remove(err => {
-        if(err !== null) {
-          console.error(err)
-        }
-      })
+        .child(`${this.state.user.uid}/starred`)
+        .child(this.state.channel.id)
+        .remove(err => {
+          if (err !== null) {
+            console.error(err);
+          }
+        });
     }
   };
 
@@ -113,17 +111,17 @@ export default class Messages extends Component {
 
   addUserStarsListener = (channelId, userId) => {
     this.state.usersRef
-    .child(userId)
-    .child('starred')
-    .once('value')
-    .then(data => {
-      if(data.val() !== null){
-        const channelIds = Object.keys(data.val())
-        const prevStarred  = channelIds.includes(channelId)
-        this.setState({isChannelStarred: prevStarred})
-      }
-    })
-  }
+      .child(userId)
+      .child("starred")
+      .once("value")
+      .then(data => {
+        if (data.val() !== null) {
+          const channelIds = Object.keys(data.val());
+          const prevStarred = channelIds.includes(channelId);
+          this.setState({ isChannelStarred: prevStarred });
+        }
+      });
+  };
 
   countUniquesUsers = messages => {
     const uniqueUsers = messages.reduce((acc, message) => {
