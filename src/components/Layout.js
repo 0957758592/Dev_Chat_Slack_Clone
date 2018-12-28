@@ -18,8 +18,11 @@ const Layout = ({ currentUser, currentChannel, isPrivateChannel }) => (
         isPrivateChannel={isPrivateChannel}
       />
     </Grid.Column>
-    <Grid.Column>
-      <MetaPanel widths={4} />
+    <Grid.Column widths={4} >
+      <MetaPanel 
+      key={currentChannel && currentChannel.id}
+      isPrivateChannel={isPrivateChannel}
+      />
     </Grid.Column>
   </Grid>
 );
