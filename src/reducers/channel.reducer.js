@@ -17,7 +17,11 @@ export const channelReducer = (state = initialState, { type, payload }) => {
         ...state,
         isPrivateChannel: payload.isPrivateChannel
       };
-
+    case channelConstant.SET_USER_POSTS:
+      return {
+        ...state,
+        userPosts: payload.userPosts
+      };
     default: {
       return state;
     }

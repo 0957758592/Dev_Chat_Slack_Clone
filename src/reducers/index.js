@@ -4,5 +4,6 @@ import { channelReducer } from "./channel.reducer";
 
 export const rootReducer = combineReducers({
   user: authReducer,
-  channel: channelReducer
+  channel: channelReducer,
+  userPosts: null
 });

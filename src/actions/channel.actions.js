@@ -17,3 +17,12 @@ export const setPrivateChannel = isPrivateChannel => dispatch =>{
     }
   })
 }
+
+export const setUserPosts = userPosts => dispatch => {
+  dispatch({
+    type: channelConstant.SET_USER_POSTS,
+    payload: {
+      userPosts
+    }
+  })
+}
