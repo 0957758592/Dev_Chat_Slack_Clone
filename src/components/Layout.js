@@ -8,7 +8,9 @@ import { connect } from "react-redux";
 
 const Layout = ({ currentUser, currentChannel, isPrivateChannel, userPosts }) => (
   <Grid columns="equal" className="app" style={{ background: "#eee" }}>
-    <ColorPanel />
+    <ColorPanel 
+     key={currentUser && currentUser.name}
+    currentUser={currentUser}/>
     <SidePanel key={currentUser && currentUser.uid} currentUser={currentUser} />
     <Grid.Column style={{ marginLeft: 320 }}>
       <Messages
@@ -20,7 +22,7 @@ const Layout = ({ currentUser, currentChannel, isPrivateChannel, userPosts }) =>
     </Grid.Column>
     <Grid.Column widths={4} >
       <MetaPanel 
-      key={currentChannel && currentChannel.id}
+      key={currentChannel && currentChannel.name}
       userPosts={userPosts}
       isPrivateChannel={isPrivateChannel}
       currentChannel={currentChannel}
