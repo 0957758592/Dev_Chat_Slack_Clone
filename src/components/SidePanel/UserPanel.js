@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AvatarEditor from "react-avatar-editor";
+
 //prettier-ignore
 import {
   Grid,
@@ -19,7 +20,14 @@ class UserPanel extends Component {
     modal: false,
     previewImage: "",
     croppedImage: "",
-    blob: ""
+    blob: "",
+    uploadedCroppedImage: "",
+    storageRef: firebase.storage().ref(),
+    userRef: firebase.auth().currentUser,
+    usersRef: firebase.database().ref("users"),
+    metadata: {
+      contentType: "image/jpeg"
+    }
   };
 
   openModal = () => {
@@ -62,13 +70,6 @@ class UserPanel extends Component {
     }
   };
 
-  handleSignOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => console.log("signed out"));
-  };
-
   handleCropImage = () => {
     if (this.avatarEditor) {
       this.avatarEditor.getImageScaledToCanvas().toBlob(blob => {
@@ -79,6 +80,51 @@ class UserPanel extends Component {
         });
       });
     }
+  };
+
+  uploadCroppedImage = () => {
+    const { storageRef, userRef, blob, metadata } = this.state;
+    storageRef
+      .child(`avatars/user-${userRef.uid}`)
+      .put(blob, metadata)
+      .then(snap => {
+        snap.ref.getDownloadURL().then(downloadURL => {
+          this.setState({ uploadedCroppedImage: downloadURL }, () =>
+            this.changeAvatar()
+          );
+        });
+      });
+  };
+
+  changeAvatar = () => {
+    this.state.userRef
+      .updateProfile({
+        photoURL: this.state.uploadedCroppedImage
+      })
+      .then(() => {
+        console.log("photoUrl updated");
+        this.closeModal();
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    this.state.usersRef
+      .child(this.state.user.uid)
+      .update({ avatar: this.state.uploadedCroppedImage })
+      .then(() => {
+        console.log("User Avatar updated");
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
+  handleSignOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => console.log("signed out"));
   };
 
   render() {
@@ -129,10 +175,10 @@ class UserPanel extends Component {
                         <AvatarEditor
                           ref={node => (this.avatarEditor = node)}
                           image={previewImage}
-                          width={200}
-                          heigh={200}
+                          width={250}
+                          heigh={250}
                           border={50}
-                          scale={1.3}
+                          scale={1.2}
                         />
                       )}
                     </Grid.Column>
@@ -140,8 +186,8 @@ class UserPanel extends Component {
                       {croppedImage && (
                         <Image
                           style={{ margin: "3.5em auto" }}
-                          width={100}
-                          heigh={100}
+                          width={250}
+                          heigh={250}
                           src={croppedImage}
                         />
                       )}
@@ -151,7 +197,11 @@ class UserPanel extends Component {
               </Modal.Content>
               <Modal.Actions>
                 {croppedImage && (
-                  <Button color="green" inverted>
+                  <Button
+                    color="green"
+                    inverted
+                    onClick={this.uploadCroppedImage}
+                  >
                     <Icon name="save" /> Change Avatar
                   </Button>
                 )}
