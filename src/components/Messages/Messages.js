@@ -4,6 +4,7 @@ import MessagesHeader from "./MessagesHeader";
 import MessageForm from "./MessageForm";
 import firebase from "../../helpers/firebase";
 import { Message } from "./Message";
+import { Typing } from "./Typing";
 import { setUserPosts } from "../../actions";
 import { connect } from "react-redux";
 
@@ -215,6 +216,7 @@ class Messages extends Component {
       searchLoading,
       isChannelStarred
     } = this.state;
+
     return (
       <React.Fragment>
         <MessagesHeader
@@ -232,6 +234,11 @@ class Messages extends Component {
             {searchTerm
               ? this.displayMessages(searchResults)
               : this.displayMessages(messages)}
+
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <span className="user__typing">{user.displayName} is typing</span>{" "}
+              <Typing />
+            </div>
             <div
               ref={el => {
                 this.messagesEnd = el;
