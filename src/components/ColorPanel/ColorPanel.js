@@ -13,12 +13,7 @@ import {
   Label,
   Segment
 } from "semantic-ui-react";
-import {
-  CompactPicker,
-  ChromePicker,
-  GithubPicker,
-  CirclePicker
-} from "react-color";
+import { CompactPicker } from "react-color";
 
 class ColorPanel extends Component {
   state = {
@@ -130,14 +125,14 @@ class ColorPanel extends Component {
           <Modal.Content>
             <Segment inverted>
               <Label content="Primary Color" />
-              <GithubPicker
+              <CompactPicker
                 color={primary}
                 onChange={this.handleChangePrimary}
               />
             </Segment>
             <Segment inverted>
               <Label content="Secondary Color" />
-              <GithubPicker
+              <CompactPicker
                 color={secondary}
                 onChange={this.handleChangeSecondary}
               />
