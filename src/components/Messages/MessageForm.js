@@ -8,6 +8,7 @@ import { ProgressBar } from "./ProgressBar";
 export class MessageForm extends Component {
   state = {
     storageRef: firebase.storage().ref(),
+    typingRef: firebase.database().ref("typing"),
     uploadTask: null,
     uploadState: "",
     percentUploaded: 0,
@@ -45,7 +46,7 @@ export class MessageForm extends Component {
 
   sendMessage = () => {
     const { getMessagesRef } = this.props;
-    const { message, channel, errors } = this.state;
+    const { message, channel, errors, user, typingRef } = this.state;
 
     if (message) {
       this.setState({ isLoading: true });
@@ -59,6 +60,10 @@ export class MessageForm extends Component {
             message: "",
             errors: []
           });
+          typingRef
+            .child(channel.id)
+            .child(user.uid)
+            .remove();
         })
         .catch(err => {
           console.log(err);
@@ -157,6 +162,22 @@ export class MessageForm extends Component {
       });
   };
 
+  handleKeyDown = () => {
+    const { message, typingRef, channel, user } = this.state;
+
+    if (message) {
+      typingRef
+        .child(channel.id)
+        .child(user.uid)
+        .set(user.displayName);
+    } else {
+      typingRef
+        .child(channel.id)
+        .child(user.uid)
+        .remove();
+    }
+  };
+
   render() {
     //prettier-ignore
     const { errors, message, isLoading, modal, uploadState, percentUploaded } = this.state;
@@ -171,6 +192,7 @@ export class MessageForm extends Component {
           placeholder="Write your message here"
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
+          onKeyDown={this.handleKeyDown}
           value={message}
           className={
             errors.some(error => error.message.includes("message"))
