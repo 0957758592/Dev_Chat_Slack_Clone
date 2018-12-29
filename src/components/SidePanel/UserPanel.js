@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AvatarEditor from "react-avatar-editor";
+import { ImageSpinner } from "../../helpers/spinner";
 
 //prettier-ignore
 import {
@@ -27,7 +28,8 @@ class UserPanel extends Component {
     usersRef: firebase.database().ref("users"),
     metadata: {
       contentType: "image/jpeg"
-    }
+    },
+    isLoading: false
   };
 
   openModal = () => {
@@ -83,7 +85,8 @@ class UserPanel extends Component {
   };
 
   uploadCroppedImage = () => {
-    const { storageRef, userRef, blob, metadata } = this.state;
+    const { storageRef, userRef, blob, metadata, isLoading } = this.state;
+    this.setState({ isLoading: true });
     storageRef
       .child(`avatars/user-${userRef.uid}`)
       .put(blob, metadata)
@@ -104,6 +107,7 @@ class UserPanel extends Component {
       .then(() => {
         console.log("photoUrl updated");
         this.closeModal();
+        this.setState({ isLoading: false });
       })
       .catch(err => {
         console.error(err);
@@ -128,7 +132,7 @@ class UserPanel extends Component {
   };
 
   render() {
-    const { user, modal, previewImage, croppedImage } = this.state;
+    const { user, modal, previewImage, croppedImage, isLoading } = this.state;
     const { primaryColor } = this.props;
     return (
       <div>
@@ -159,59 +163,70 @@ class UserPanel extends Component {
             {/* Change User Avatar Modal*/}
 
             <Modal basic open={modal} onClose={this.closeModal}>
-              <Modal.Header>Change Avatar</Modal.Header>
-              <Modal.Content>
-                <Input
-                  onChange={this.handleChange}
-                  fluid
-                  type="file"
-                  label="New Avatar"
-                  name="previewImage"
-                />
-                <Grid centered stackable columns={2}>
-                  <Grid.Row centered>
-                    <Grid.Column className="ui center aligned grid">
-                      {previewImage && (
-                        <AvatarEditor
-                          ref={node => (this.avatarEditor = node)}
-                          image={previewImage}
-                          width={250}
-                          heigh={250}
-                          border={50}
-                          scale={1.2}
-                        />
-                      )}
-                    </Grid.Column>
-                    <Grid.Column>
-                      {croppedImage && (
-                        <Image
-                          style={{ margin: "3.5em auto" }}
-                          width={250}
-                          heigh={250}
-                          src={croppedImage}
-                        />
-                      )}
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Modal.Content>
-              <Modal.Actions>
-                {croppedImage && (
-                  <Button
-                    color="green"
-                    inverted
-                    onClick={this.uploadCroppedImage}
-                  >
-                    <Icon name="save" /> Change Avatar
-                  </Button>
-                )}
-                <Button color="blue" inverted onClick={this.handleCropImage}>
-                  <Icon name="image" /> Preview
-                </Button>
-                <Button color="red" inverted onClick={this.closeModal}>
-                  <Icon name="remove" /> Cancel
-                </Button>
-              </Modal.Actions>
+              {isLoading ? (
+                <ImageSpinner />
+              ) : (
+                <React.Fragment>
+                  <Modal.Header>Change Avatar</Modal.Header>
+                  <Modal.Content>
+                    <Input
+                      onChange={this.handleChange}
+                      fluid
+                      type="file"
+                      label="New Avatar"
+                      name="previewImage"
+                    />
+                    <Grid centered stackable columns={2}>
+                      <Grid.Row centered>
+                        <Grid.Column className="ui center aligned grid">
+                          {previewImage && (
+                            <AvatarEditor
+                              ref={node => (this.avatarEditor = node)}
+                              image={previewImage}
+                              width={250}
+                              heigh={250}
+                              border={50}
+                              scale={1.2}
+                            />
+                          )}
+                        </Grid.Column>
+                        <Grid.Column>
+                          {croppedImage && (
+                            <Image
+                              style={{ margin: "3.5em auto" }}
+                              width={250}
+                              heigh={250}
+                              src={croppedImage}
+                            />
+                          )}
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    {croppedImage && (
+                      <Button
+                        color="green"
+                        inverted
+                        onClick={this.uploadCroppedImage}
+                        disabled={isLoading}
+                      >
+                        <Icon name="save" /> Change Avatar
+                      </Button>
+                    )}
+                    <Button
+                      color="blue"
+                      inverted
+                      onClick={this.handleCropImage}
+                    >
+                      <Icon name="image" /> Preview
+                    </Button>
+                    <Button color="red" inverted onClick={this.closeModal}>
+                      <Icon name="remove" /> Cancel
+                    </Button>
+                  </Modal.Actions>
+                </React.Fragment>
+              )}
             </Modal>
           </Grid.Column>
         </Grid>

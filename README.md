@@ -1,6 +1,6 @@
 ## Slack Clone App (2018)
 
-React, Redux, Firebase, Semantic-UI, React-Color, React-Avatar-Editor
+React, Redux, Firebase, Semantic-UI, React-Color, React-Avatar-Editor, Moment
 
 ## DEMO:
 

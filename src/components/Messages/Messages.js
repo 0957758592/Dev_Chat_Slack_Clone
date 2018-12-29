@@ -4,8 +4,8 @@ import MessagesHeader from "./MessagesHeader";
 import MessageForm from "./MessageForm";
 import firebase from "../../helpers/firebase";
 import { Message } from "./Message";
-import {setUserPosts} from "../../actions"
-import {connect} from 'react-redux'
+import { setUserPosts } from "../../actions";
+import { connect } from "react-redux";
 
 class Messages extends Component {
   state = {
@@ -108,7 +108,7 @@ class Messages extends Component {
         messagesLoading: false
       });
       this.countUniquesUsers(loadedMessages);
-      this.countUserPost(loadedMessages)
+      this.countUserPost(loadedMessages);
     });
   };
 
@@ -140,18 +140,18 @@ class Messages extends Component {
 
   countUserPost = messages => {
     let userPosts = messages.reduce((acc, message) => {
-      if(message.user.name in acc){
-        acc[message.user.name].count += 1
+      if (message.user.name in acc) {
+        acc[message.user.name].count += 1;
       } else {
         acc[message.user.name] = {
           avatar: message.user.avatar,
           count: 1
-        }
+        };
       }
-      return acc
-    }, {})
-    this.props.setUserPosts(userPosts)
-  }
+      return acc;
+    }, {});
+    this.props.setUserPosts(userPosts);
+  };
 
   displayMessages = messages =>
     messages.length > 0 &&
@@ -187,10 +187,7 @@ class Messages extends Component {
 
   handleSearchMessages = () => {
     const channelMessages = [...this.state.messages];
-    const regex = new RegExp(
-      this.state.searchTerm && `\\${this.state.searchTerm}`,
-      "gi"
-    );
+    const regex = new RegExp(this.state.searchTerm, "gi");
     const searchResults = channelMessages.reduce((acc, message) => {
       if (
         (message.content && message.content.match(regex)) ||
@@ -256,4 +253,7 @@ class Messages extends Component {
   }
 }
 
-export default connect(null, {setUserPosts}) (Messages)
+export default connect(
+  null,
+  { setUserPosts }
+)(Messages);
