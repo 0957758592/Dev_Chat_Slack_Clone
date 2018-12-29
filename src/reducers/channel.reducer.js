@@ -2,7 +2,8 @@ import { channelConstant } from "../constants";
 
 const initialState = {
   currentChannel: null,
-  isPrivateChannel: false
+  isPrivateChannel: false,
+  userPosts: null
 };
 
 export const channelReducer = (state = initialState, { type, payload }) => {
