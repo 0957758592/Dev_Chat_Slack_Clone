@@ -130,14 +130,14 @@ class ColorPanel extends Component {
           <Modal.Content>
             <Segment inverted>
               <Label content="Primary Color" />
-              <CirclePicker
+              <GithubPicker
                 color={primary}
                 onChange={this.handleChangePrimary}
               />
             </Segment>
             <Segment inverted>
               <Label content="Secondary Color" />
-              <CirclePicker
+              <GithubPicker
                 color={secondary}
                 onChange={this.handleChangeSecondary}
               />

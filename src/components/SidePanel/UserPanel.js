@@ -1,10 +1,29 @@
 import React, { Component } from "react";
-import { Grid, Header, Icon, Dropdown, Image } from "semantic-ui-react";
+//prettier-ignore
+import {
+  Grid,
+  Header,
+  Icon,
+  Dropdown,
+  Image,
+  Modal,
+  Input,
+  Button
+} from "semantic-ui-react";
 import firebase from "../../helpers/firebase";
 
 class UserPanel extends Component {
   state = {
-    user: this.props.currentUser
+    user: this.props.currentUser,
+    modal: false
+  };
+
+  openModal = () => {
+    this.setState({ modal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ modal: false });
   };
 
   dropdownOptions = () => [
@@ -19,7 +38,7 @@ class UserPanel extends Component {
     },
     {
       key: "avatar",
-      text: <span>Change Avatar</span>
+      text: <span onClick={this.openModal}>Change Avatar</span>
     },
     {
       key: "signout",
@@ -35,7 +54,7 @@ class UserPanel extends Component {
   };
 
   render() {
-    const { user } = this.state;
+    const { user, modal } = this.state;
     const { primaryColor } = this.props;
     return (
       <div>
@@ -47,20 +66,54 @@ class UserPanel extends Component {
                 <Icon name="code" />
                 <Header.Content>DevChat</Header.Content>
               </Header>
-            </Grid.Row>
-            {/* User Dropdown */}
 
-            <Header style={{ padding: "0.25em" }} as="h4" inverted>
-              <Dropdown
-                trigger={
-                  <span>
-                    <Image src={user.photoURL} spaced="right" avatar />
-                    {user.displayName}
-                  </span>
-                }
-                options={this.dropdownOptions()}
-              />
-            </Header>
+              {/* User Dropdown */}
+
+              <Header style={{ padding: "0.25em" }} as="h4" inverted>
+                <Dropdown
+                  trigger={
+                    <span>
+                      <Image src={user.photoURL} spaced="right" avatar />
+                      {user.displayName}
+                    </span>
+                  }
+                  options={this.dropdownOptions()}
+                />
+              </Header>
+            </Grid.Row>
+
+            {/* Change User Avatar Modal*/}
+
+            <Modal basic open={modal} onClose={this.closeModal}>
+              <Modal.Header>Change Avatar</Modal.Header>
+              <Modal.Content>
+                <Input
+                  fluid
+                  type="file"
+                  label="New Avatar"
+                  name="previewImage"
+                />
+                <Grid centered stackable colums={2}>
+                  <Grid.Row centered>
+                    <Grid.Column className="ui center aligned grid">
+                      {/* Image Prewiev */}
+                    </Grid.Column>
+                    <Grid.Column>{/* Croped Image Preview */}</Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button color="green" inverted>
+                  <Icon name="save" /> Change Avatar
+                </Button>
+                <Button color="blue" inverted>
+                  <Icon name="image" /> Preview
+                </Button>
+                <Button color="red" inverted onClick={this.closeModal}>
+                  <Icon name="remove" /> Cancel
+                </Button>
+              </Modal.Actions>
+            </Modal>
           </Grid.Column>
         </Grid>
       </div>
