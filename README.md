@@ -4,16 +4,43 @@ React, Redux, Firebase, Semantic-UI, React-Color, React-Avatar-Editor, Moment, E
 
 ## DEMO:
 
-[testDemo Link... under development, in progress..](https://slack-clone-react-21j1fzu4z.now.sh/)
+[Demo-Link](https://react-slack-clone-11f80.firebaseapp.com/)
 
 You can check it at any email
 **E.G.** `123@123.123`
 
-email confirmation will be provide later..
+## DEPLOY:
 
-## QUICK BUILD
+Deployed with Firebase-Tools:
+
+1. run `npm i firebase-tools -g`
+2. run `firebase login`
+3. run `firebase init`
+4. select features to setup **E.G.** `Database: ...` && `Storage: ...`
+5. select your Firebase project `your-name-firebase-project`
+6. Press enter to use files (_Database_ && _Storage_) you have choosed before **E.G.** `database.rules.json` && `storage.rules`
+7. run `npm run build` to build your project
+8. add to `firebase.json` path to your builded project as public hosting to deploy:
+
+```
+  "hosting": {
+    "public": "./build"
+  }
+```
+
+9. run `firebase deploy`
+
+### FIREBASE RULES:
+
+- FIREBASE DATABASE RULES: look at `database.rules.json`
+
+- FIREBASE STORAGE RULES: look at `storage.json`
+
+## QUICK BUILD/DEPLOY with NOW:
 
 _quick built under **[https://zeit.co/](https://zeit.co/)**_
+
+[Link(test deploy)](https://slack-clone-react-21j1fzu4z.now.sh/)
 
 1. `npm i now`
 2. create `now.json` file at the root of the project
