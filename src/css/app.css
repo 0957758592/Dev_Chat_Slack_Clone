@@ -65,23 +65,23 @@ html,
 }
 
 /* Typing.js */
-.user__typing{
-font-style: italic;
-font-weight: bold;
-margin-right: 3px;
+.user__typing {
+  font-style: italic;
+  font-weight: bold;
+  margin-right: 3px;
 }
 
-.typing{
-width: 5em;
-height: 2em;
-position: relative;
-padding: 10px;
-margin-left: 5px;
-background: #e6e6e6;
-border-radius: 20px;
+.typing {
+  width: 5em;
+  height: 2em;
+  position: relative;
+  padding: 10px;
+  margin-left: 5px;
+  background: #e6e6e6;
+  border-radius: 20px;
 }
 
-.typing__dot{
+.typing__dot {
   float: left;
   width: 8px;
   height: 8px;
@@ -92,19 +92,19 @@ border-radius: 20px;
   animation: loadingFade 1s infinite;
 }
 
-.emojipicker{
+.emojipicker {
   position: absolute;
 }
 
-.typing__dot:nth-child(1){
+.typing__dot:nth-child(1) {
   animation-delay: 0s;
 }
 
-.typing__dot:nth-child(2){
+.typing__dot:nth-child(2) {
   animation-delay: 0.2s;
 }
 
-.typing__dot:nth-child(3){
+.typing__dot:nth-child(3) {
   animation-delay: 0.4s;
 }
 
@@ -120,3 +120,66 @@ border-radius: 20px;
   }
 }
 
+/* Skeleton.js */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  height: 40px;
+  bottom: 10px;
+}
+
+.skeleton::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  animation: sweep 2s infinite;
+  background-image: linear-gradient(
+    to left,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.skeleton__avatar {
+  height: 35px;
+  width: 35px;
+  border-radius: 3px;
+  background-color: rgba(58, 57, 57, 0.3);
+}
+.skeleton__author {
+  background-color: rgba(58, 57, 57, 0.3);
+  width: 120px;
+  height: 10px;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  right: 0;
+}
+.skeleton__details {
+  background-color: rgba(58, 57, 57, 0.3);
+  height: 20px;
+  background-repeat: 3px;
+  position: absolute;
+  bottom: 5px;
+  left: 40px;
+  right: 20px;
+
+}

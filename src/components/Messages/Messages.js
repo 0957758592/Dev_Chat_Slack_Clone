@@ -7,6 +7,7 @@ import { Message } from "./Message";
 import { Typing } from "./Typing";
 import { setUserPosts } from "../../actions";
 import { connect } from "react-redux";
+import { Skeleton } from "./Skeleton";
 
 class Messages extends Component {
   state = {
@@ -250,6 +251,15 @@ class Messages extends Component {
       </div>
     ));
 
+  displayMessagesLoading = mesagesLoading =>
+    mesagesLoading ? (
+      <React.Fragment>
+        {[...Array(10)].map((_, i) => (
+          <Skeleton key={i} />
+        ))}
+      </React.Fragment>
+    ) : null;
+
   render() {
     //prettier-ignore
     const {
@@ -263,7 +273,8 @@ class Messages extends Component {
       searchResults,
       searchLoading,
       isChannelStarred,
-      typingUsers
+      typingUsers,
+      messagesLoading
     } = this.state;
 
     return (
@@ -280,6 +291,7 @@ class Messages extends Component {
 
         <Segment>
           <Comment.Group className={"messages"}>
+            {this.displayMessagesLoading(messagesLoading)}
             {searchTerm
               ? this.displayMessages(searchResults)
               : this.displayMessages(messages)}
