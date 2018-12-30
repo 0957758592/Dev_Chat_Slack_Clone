@@ -1,6 +1,6 @@
 ## Slack Clone App (2018)
 
-React, Redux, Firebase, Semantic-UI, React-Color, React-Avatar-Editor, Moment
+React, Redux, Firebase, Semantic-UI, React-Color, React-Avatar-Editor, Moment, Emoji-Mart :sunglasses: :+1:
 
 ## DEMO:
 
@@ -11,7 +11,7 @@ You can check it at any email
 
 email confirmation will be provide later..
 
-### QUICK BUILD
+## QUICK BUILD
 
 _quick built under **[https://zeit.co/](https://zeit.co/)**_
 
@@ -46,10 +46,10 @@ _quick built under **[https://zeit.co/](https://zeit.co/)**_
 ```
 {
   "_": "This is your Now credentials file. DON'T SHARE! More: https://bit.ly/2qAK8bb",
-  "token": **"YOUR TOKEN"**
+  "token": "YOUR TOKEN"
 }
 ```
 
 8. type on console (at the root of your App) `now --public` to build and publick your react App
 
-- to skip from 6 to 8 steps - just type on console `now -t **YOUR TOKEN**`
+- to skip from 6 to 8 steps - just type on console `now -t YOUR TOKEN`

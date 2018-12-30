@@ -85,7 +85,7 @@ class UserPanel extends Component {
   };
 
   uploadCroppedImage = () => {
-    const { storageRef, userRef, blob, metadata, isLoading } = this.state;
+    const { storageRef, userRef, blob, metadata } = this.state;
     this.setState({ isLoading: true });
     storageRef
       .child(`avatars/user-${userRef.uid}`)

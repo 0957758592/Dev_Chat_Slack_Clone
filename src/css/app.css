@@ -92,6 +92,10 @@ border-radius: 20px;
   animation: loadingFade 1s infinite;
 }
 
+.emojipicker{
+  position: absolute;
+}
+
 .typing__dot:nth-child(1){
   animation-delay: 0s;
 }
@@ -115,3 +119,4 @@ border-radius: 20px;
     opacity: 0;
   }
 }
+
