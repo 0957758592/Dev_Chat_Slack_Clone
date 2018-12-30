@@ -3,7 +3,7 @@
     "channels": {
       ".read": "auth != null",
       "$channelId": {
-        ".write": "auth !=null",
+        ".write": "auth != null",
         ".validate": "newData.hasChildren(['id', 'name', 'createdBy', 'details'])",
         "id": {
           ".validate": "newData.val() === $channelId"
@@ -21,8 +21,8 @@
         ".read": "auth != null",
         ".validate": "root.child('channels/'+$channelId).exists()",
         "$messageId": {
-          ".write": "auth !=null",
-          ".validate": "(newData.hasChildren(['content', 'user', 'timestamp']) && !newData.hasChildren(['image']) || newData.hasChildren(['content', 'user', 'timestamp']) && !newData.hasChildren(['content']) )",
+          ".write": "auth != null",
+          ".validate": "(newData.hasChildren(['content', 'user', 'timestamp']) && !newData.hasChildren(['image'])) || (newData.hasChildren(['image', 'user', 'timestamp']) && !newData.hasChildren(['content']))",
           "content": {
             ".validate": "newData.val().length > 0"
           },
@@ -40,8 +40,8 @@
         "$uid2": {
           ".read": "auth != null && ($uid1 === auth.uid || $uid2 === auth.uid)",
           "$messageId": {
-            ".write": "auth !=null",
-            ".validate": "(newData.hasChildren(['content', 'user', 'timestamp']) && !newData.hasChildren(['image']) || newData.hasChildren(['content', 'user', 'timestamp']) && !newData.hasChildren(['content']) )",
+            ".write": "auth != null",
+            ".validate": "(newData.hasChildren(['content', 'user', 'timestamp']) && !newData.hasChildren(['image'])) || (newData.hasChildren(['image', 'user', 'timestamp']) && !newData.hasChildren(['content']))",
             "content": {
               ".validate": "newData.val().length > 0"
             },
@@ -57,16 +57,16 @@
     },
     "presence": {
       ".read": "auth != null",
-      ".write": "auth !=null"
+      ".write": "auth != null"
     },
     "typing": {
       ".read": "auth != null",
-      ".write": "auth !=null"
+      ".write": "auth != null"
     },
     "users": {
       ".read": "auth != null",
       "$uid": {
-        ".write": "auth !=null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
         ".validate": "newData.hasChildren(['name', 'avatar'])",
         "name": {
           ".validate": "newData.val().length > 0"
