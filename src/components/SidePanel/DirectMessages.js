@@ -25,8 +25,10 @@ export class DirectMessages extends Component {
   }
 
   removeListeners = () => {
-    const { user } = this.state;
-    this.state.presenceRef.child(user.uid).off();
+    // const { user } = this.state;
+    // this.state.presenceRef.child(user.uid).off();
+    this.state.usersRef.off();
+    this.state.presenceRef.off();
     this.state.connectedRef.off();
   };
 

@@ -23,6 +23,13 @@ export class MessageForm extends Component {
     emojiPicker: false
   };
 
+  componentWillUnmount(){
+    if(this.state.uploadTask !== null ) {
+      this.state.uploadTask.cancel();
+      this.setState({uploadTask: null})
+    }
+  }
+
   openModal = () => this.setState({ modal: true });
 
   closeModal = () => this.setState({ modal: false });
@@ -82,11 +89,11 @@ export class MessageForm extends Component {
     }
   };
 
-  handleKeyPress = e => {
-    if (e.key === "Enter") {
-      this.sendMessage();
-    }
-  };
+  // handleKeyPress = e => {
+  //   if (e.key === "Enter") {
+  //     this.sendMessage();
+  //   }
+  // };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -165,7 +172,11 @@ export class MessageForm extends Component {
       });
   };
 
-  handleKeyDown = () => {
+  handleKeyDown = e => {
+    if (e.ctrlKey && e.keyCode === 13) {
+      this.sendMessage();
+    }
+
     const { message, typingRef, channel, user } = this.state;
 
     if (message) {
@@ -225,16 +236,18 @@ export class MessageForm extends Component {
           fluid
           name="message"
           style={{ marginBottom: "0.7em" }}
-          label={<Button 
-            icon={emojiPicker ? 'close' : 'add'}
-            content={emojiPicker ? 'Close' : null} 
-            onClick={this.handleTogglePicker} 
-            />}
+          label={
+            <Button
+              icon={emojiPicker ? "close" : "add"}
+              content={emojiPicker ? "Close" : null}
+              onClick={this.handleTogglePicker}
+            />
+          }
           labelPosition="left"
           placeholder="Write your message here"
           ref={node => (this.messageInputRef = node)}
           onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
+          // onKeyPress={this.handleKeyPress}
           onKeyDown={this.handleKeyDown}
           value={message}
           className={
